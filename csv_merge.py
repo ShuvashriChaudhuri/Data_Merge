@@ -8,7 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt 
 
 
-route = r'C:\Users\Shuvashri\Downloads\new turmeric scans\new turmeric scans'
+route = r'C:\Users\Shuvashri\Downloads\new turmeric scans\new turmeric scans\TU1900054239'
 
 
 sub_dirs = [os.path.join(route, dir) for dir in os.listdir(route) if os.path.isdir(os.path.join(route, dir))]
@@ -47,10 +47,14 @@ csv_files = [os.path.join(route, csv) for csv in os.listdir(route) if os.path.is
 
 new_df = pd.DataFrame()
 for filename in csv_files:
+	String_Split = route.split('\\')
 	temp = []
 	df = pd.read_csv(filename)
 	param = os.path.basename(filename).rstrip('.csv')
+	P_1 = String_Split[-1]
+	temp.append(P_1)
 	temp.append(param)
+	print(type(temp))
 	temp.extend(df['Wavelength (nm)'])
 	temp.extend(df['Absorbance'])
 	temp_df = pd.DataFrame([temp])
@@ -58,7 +62,7 @@ for filename in csv_files:
 
 
 # Storing dataset into excel workbook
-new_df.to_excel(route+'/merged_Dataset.xlsx', index=False)
+new_df.to_excel(route+'/{}.xlsx'.format(P_1), index=False)
 
 
 
